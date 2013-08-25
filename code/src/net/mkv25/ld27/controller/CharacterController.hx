@@ -67,6 +67,8 @@ class CharacterController
 		{
 			aiTurnPosition++;
 		}
+		
+		eventbus.readyForNextTurn.dispatch(this);
 	}
 	
 	public function getAiCharacter():CharacterVO

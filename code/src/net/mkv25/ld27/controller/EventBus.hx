@@ -7,6 +7,7 @@ class EventBus
 	public var requestNextScreen:Signal;
 	public var requestStartGameWithCharacter:Signal;
 	public var requestNextTurn:Signal;
+	public var readyForNextTurn:Signal;
 	
 	public function new() 
 	{
@@ -14,6 +15,7 @@ class EventBus
 		requestNextScreen = new Signal();
 		requestStartGameWithCharacter = new Signal();
 		requestNextTurn = new Signal();
+		readyForNextTurn = new Signal();
 	}
 	
 }

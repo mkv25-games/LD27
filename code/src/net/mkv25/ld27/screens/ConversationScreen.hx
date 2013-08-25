@@ -32,6 +32,7 @@ class ConversationScreen extends Screen
 	var aiNameText:TextField;
 	
 	var optionButtons:Array<ButtonUI>;
+	var ignoreOption:Bool;
 	
 	public function new() 
 	{
@@ -61,7 +62,7 @@ class ConversationScreen extends Screen
 		for (i in 0...4)
 		{
 			var button = new ButtonUI();
-			button.setup("Option " + (i + 1), null);
+			button.setup("Option " + (i + 1), onOptionButtonSelected);
 			optionButtons.push(button);
 		}
 	}
@@ -72,11 +73,13 @@ class ConversationScreen extends Screen
 		
 		artwork.addChild(playerCharacterUI.artwork);
 		artwork.addChild(aiCharacterUI.artwork);
+		
+		eventbus.readyForNextTurn.add(onReadyForNextTurn);
 	}
 	
 	override public function show():Void 
 	{
-		super.show();
+		// super.show();
 		
 		var player:CharacterVO = characterController.selectedCharacter;
 		var ai:CharacterVO = characterController.getAiCharacter();
@@ -113,20 +116,23 @@ class ConversationScreen extends Screen
 		{
 			button.artwork.x = 400;
 			button.artwork.y = 550; // offscreen
+			button.artwork.alpha = 1.0;
 			artwork.addChild(button.artwork);
 			
 			var targetY:Int = 460 - (55 * c);
-			Actuate.tween(button.artwork, 0.5, { y: targetY } ).delay(0.5 - 0.1 * c);
+			Actuate.tween(button.artwork, 0.5, { y: targetY, alpha: 1.0 } ).delay(0.5 - 0.1 * c);
 			
 			c++;
 		}
 		
+		ignoreOption = true;
 		Actuate.tween(timeRemainingText, 0.05, { alpha: 0.0 } ).repeat(7).reflect(true).delay(0.15).onComplete(startTimer);
 	}
 	
 	function startTimer()
 	{
 		ignoreTimer = false;
+		ignoreOption = false;
 		timeRemaining = 10.0;
 		Actuate.tween(this, 10.0, { timeRemaining: 0 } ).ease(Linear.easeNone).onUpdate(onTimerUpdate).onComplete(onTimerComplete);
 	}
@@ -135,7 +141,6 @@ class ConversationScreen extends Screen
 	{
 		ignoreTimer = true;
 		Actuate.stop(this);
-		timeRemainingText.text = "?";
 	}
 	
 	function onTimerUpdate():Void
@@ -161,6 +166,48 @@ class ConversationScreen extends Screen
 	{
 		// "game over"
 		eventbus.requestNextScreen.dispatch(this);
+	}
+	
+	function onOptionButtonSelected(button:ButtonUI)
+	{
+		if (ignoreOption)
+			return;
+		
+		ignoreOption = true;
+		stopTimer();
+		
+		var optionIndex = Lambda.indexOf(optionButtons, button);
+		trace("Option " + optionIndex + " selected");
+		
+		// flash the timer text
+		Actuate.tween(timeRemainingText, 0.05, { alpha: 0.0 } ).repeat(7).reflect(true).delay(0.15).onComplete(onOptionSelectedEndComplete, [optionIndex]);
+		
+		for (item in optionButtons)
+		{
+			if (item == button)
+			{
+				// flash the option
+				Actuate.tween(item.artwork, 0.05, { alpha: 0.0 } ).repeat(7).reflect(true).delay(0.15);
+			}
+			else
+			{
+				// hide the other options
+				Actuate.tween(item.artwork, 0.2, { alpha: 0.0 } );
+			}
+		}
+	}
+	
+	function onOptionSelectedEndComplete(optionIndex:Int)
+	{
+		// TODO: Do something with optionIndex
+		trace("Doing something with " + optionIndex + ".");
+		
+		eventbus.requestNextTurn.dispatch(this);
+	}
+	
+	function onReadyForNextTurn(e)
+	{
+		show();
 	}
 	
 	function setupTextField(textField:TextField, x:Int, y:Int, label:String, width:Int=120, height:Int=25):TextField
