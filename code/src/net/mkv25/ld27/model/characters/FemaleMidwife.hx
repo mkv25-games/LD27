@@ -10,7 +10,7 @@ class FemaleMidwife extends CharacterVO
 	{
 		super();
 		
-		name = "Landowner";
+		name = "Midwife";
 		gender = GenderEnum.Female;
 		bodyType = BodyTypeEnum.FemaleMidwife;
 		
