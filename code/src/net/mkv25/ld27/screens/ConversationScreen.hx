@@ -79,7 +79,7 @@ class ConversationScreen extends Screen
 		super.show();
 		
 		var player:CharacterVO = characterController.selectedCharacter;
-		var ai:CharacterVO = characterController.selectedCharacter;
+		var ai:CharacterVO = characterController.getAiCharacter();
 		
 		setupTextField(playerGoldText, 120, 3, formatThousands(player.gold));
 		setupTextField(playerLandText, 440, 3, formatThousands(player.land));

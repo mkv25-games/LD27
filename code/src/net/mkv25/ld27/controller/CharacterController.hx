@@ -86,8 +86,8 @@ class CharacterController
 			character.reset();
 		}
 		
-		turn = 0;
-		aiTurnPosition = 0;
+		turn = 1;
+		aiTurnPosition = 1;
 	}
 	
 	function onCharacterSelected(character:CharacterVO)
