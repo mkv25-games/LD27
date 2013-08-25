@@ -15,14 +15,17 @@ import net.mkv25.ld27.ui.CharacterUI;
 
 class CharacterController 
 {
-	public var characters:List<CharacterVO>;
+	public var characters:Array<CharacterVO>;
 	public var selectedCharacter:CharacterVO;
+	
+	public var turn:Int = 0;
+	public var aiTurnPosition:Int = 0;
 	
 	var eventbus:EventBus;
 	
 	public function new() 
 	{
-		characters = new List<CharacterVO>();
+		characters = new Array<CharacterVO>();
 	}
 	
 	public function setup(eventbus:EventBus):Void
@@ -40,22 +43,62 @@ class CharacterController
 		addCharacter(new MalePriest());
 		addCharacter(new MaleHealer());
 		
+		eventbus.requestBeginGame.add(onGameReset);
 		eventbus.requestStartGameWithCharacter.add(onCharacterSelected);
+		eventbus.requestNextTurn.add(onTurnAdvance);
 	}
 	
 	public function addCharacter(character:CharacterVO):CharacterVO
 	{
-		characters.add(character);
+		characters.push(character);
 		
 		character.reset();
 		
 		return character;
 	}
 	
+	function nextTurn():Void
+	{
+		turn++;
+		aiTurnPosition++;
+		
+		// skip an extra step to prevent player being selected as AI
+		if (turn % characters.length == 0)
+		{
+			aiTurnPosition++;
+		}
+	}
+	
+	public function getAiCharacter():CharacterVO
+	{
+		var charIndex:Int = Lambda.indexOf(characters, selectedCharacter);
+		var index:Int = (aiTurnPosition + charIndex) % characters.length;
+		
+		var ai = characters[index];
+		
+		return ai;
+	}
+	
+	function onGameReset(e):Void
+	{
+		for (character in characters)
+		{
+			character.reset();
+		}
+		
+		turn = 0;
+		aiTurnPosition = 0;
+	}
+	
 	function onCharacterSelected(character:CharacterVO)
 	{
 		selectedCharacter = character;
 		eventbus.requestNextScreen.dispatch(this);
+	}
+	
+	function onTurnAdvance(e):Void
+	{
+		nextTurn();
 	}
 	
 }

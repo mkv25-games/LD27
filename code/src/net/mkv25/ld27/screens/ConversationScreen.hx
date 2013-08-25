@@ -3,6 +3,7 @@ import motion.Actuate;
 import motion.easing.Linear;
 import net.mkv25.ld27.core.Text;
 import net.mkv25.ld27.model.CharacterVO;
+import net.mkv25.ld27.ui.ButtonUI;
 import net.mkv25.ld27.ui.CharacterUI;
 import nme.text.TextField;
 import nme.text.TextFormatAlign;
@@ -30,6 +31,8 @@ class ConversationScreen extends Screen
 	var playerNameText:TextField;
 	var aiNameText:TextField;
 	
+	var optionButtons:Array<ButtonUI>;
+	
 	public function new() 
 	{
 		super();
@@ -53,6 +56,14 @@ class ConversationScreen extends Screen
 		aiCharacterUI = new CharacterUI();
 		playerNameText = Text.makeTextField("fonts/gabriola.ttf", 32, 0x2E2724, TextFormatAlign.CENTER);
 		aiNameText = Text.makeTextField("fonts/gabriola.ttf", 32, 0x2E2724, TextFormatAlign.CENTER);
+		
+		optionButtons = new Array<ButtonUI>();
+		for (i in 0...4)
+		{
+			var button = new ButtonUI();
+			button.setup("Option " + (i + 1), null);
+			optionButtons.push(button);
+		}
 	}
 	
 	override function postSetup():Void 
@@ -89,12 +100,26 @@ class ConversationScreen extends Screen
 		playerCharacterUI.artwork.scaleX = playerCharacterUI.artwork.scaleY = 0.5;
 		
 		aiCharacterUI.setup(ai);
-		aiCharacterUI.artwork.x = 680;
+		aiCharacterUI.artwork.x = 900; // offscreen
 		aiCharacterUI.artwork.y = 193;
 		aiCharacterUI.artwork.scaleX = aiCharacterUI.artwork.scaleY = 0.5;
+		Actuate.tween(aiCharacterUI.artwork, 0.5, { x: 680 } ).delay(0.1);
 		
 		setupTextField(playerNameText, 130, 310, player.name, 120, 30);
 		setupTextField(aiNameText, 680, 310, ai.name, 120, 30);
+		
+		var c:Int = 0;
+		for (button in optionButtons)
+		{
+			button.artwork.x = 400;
+			button.artwork.y = 550; // offscreen
+			artwork.addChild(button.artwork);
+			
+			var targetY:Int = 460 - (55 * c);
+			Actuate.tween(button.artwork, 0.5, { y: targetY } ).delay(0.5 - 0.1 * c);
+			
+			c++;
+		}
 		
 		Actuate.tween(timeRemainingText, 0.05, { alpha: 0.0 } ).repeat(7).reflect(true).delay(0.15).onComplete(startTimer);
 	}
@@ -129,7 +154,13 @@ class ConversationScreen extends Screen
 		if (ignoreTimer)
 			return;
 			
-		Actuate.tween(timeRemainingText, 0.05, { alpha: 0.0 } ).repeat(7).reflect(true).delay(0.15);
+		Actuate.tween(timeRemainingText, 0.05, { alpha: 0.0 } ).repeat(7).reflect(true).delay(0.15).onComplete(onTimerEndComplete);
+	}
+	
+	function onTimerEndComplete()
+	{
+		// "game over"
+		eventbus.requestNextScreen.dispatch(this);
 	}
 	
 	function setupTextField(textField:TextField, x:Int, y:Int, label:String, width:Int=120, height:Int=25):TextField

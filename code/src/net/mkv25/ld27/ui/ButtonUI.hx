@@ -36,7 +36,7 @@ class ButtonUI
 		artwork.addChild(textField);
 		
 		textField.text = label;
-		textField.width = 120;
+		textField.width = 260;
 		textField.height = 36;
 		textField.x = - Math.ceil(textField.width / 2);
 		textField.y = - Math.ceil(textField.height / 2);
