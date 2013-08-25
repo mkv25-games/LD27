@@ -72,7 +72,7 @@ class CharacterController
 	public function getAiCharacter():CharacterVO
 	{
 		var charIndex:Int = Lambda.indexOf(characters, selectedCharacter);
-		var index:Int = (aiTurnPosition + charIndex) % characters.length;
+		var index:Int = (aiTurnPosition + charIndex + Math.round(characters.length / 2)) % characters.length;
 		
 		var ai = characters[index];
 		
