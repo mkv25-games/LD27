@@ -1,5 +1,6 @@
 package net.mkv25.ld27;
 
+import net.mkv25.ld27.controller.CharacterController;
 import net.mkv25.ld27.controller.EventBus;
 import net.mkv25.ld27.controller.ScreenController;
 import nme.display.Sprite;
@@ -11,6 +12,7 @@ class Main extends Sprite
 {
 	public var eventbus:EventBus;
 	public var screenController:ScreenController;
+	public var characterController:CharacterController;
 	
 	public function new() 
 	{
@@ -27,9 +29,11 @@ class Main extends Sprite
 		// initialise objects
 		eventbus = new EventBus();
 		screenController = new ScreenController();
+		characterController = new CharacterController();
 		
 		// dependency injection
-		screenController.setup(stage, eventbus);
+		characterController.setup(eventbus);
+		screenController.setup(stage, eventbus, characterController);
 	}
 	
 	static public function main() 

@@ -12,6 +12,7 @@ class ScreenController
 {
 	var stage:Stage;
 	var eventbus:EventBus;
+	var characterController:CharacterController;
 	
 	var screens:Array<Screen>;
 	var currentScreen:Screen;
@@ -25,10 +26,11 @@ class ScreenController
 		currentScreen = null;
 	}
 	
-	public function setup(stage:Stage, eventbus:EventBus):Void
+	public function setup(stage:Stage, eventbus:EventBus, characterController:CharacterController):Void
 	{
 		this.stage = stage;
 		this.eventbus = eventbus;
+		this.characterController = characterController;
 		
 		while (screens.length > 0)
 			screens.pop();
@@ -57,7 +59,7 @@ class ScreenController
 	public function addScreen(screen:Screen):Screen
 	{
 		screens.push(screen);
-		screen.setup(eventbus);
+		screen.setup(eventbus, characterController);
 		
 		return screen;
 	}

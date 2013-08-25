@@ -12,10 +12,8 @@ class IntroScreen extends Screen
 		super();
 	}
 	
-	override public function setup(eventbus:EventBus):Void
+	override function postSetup():Void 
 	{
-		super.setup(eventbus);
-		
 		setBackground("img/screen_intro_background.png");
 		
 		beginButton = new ButtonUI();

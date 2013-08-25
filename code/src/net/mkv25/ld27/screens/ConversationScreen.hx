@@ -5,7 +5,10 @@ class ConversationScreen extends Screen
 	public function new() 
 	{
 		super();
-		
+	}
+	
+	override function postSetup():Void 
+	{		
 		setBackground("img/screen_conversation_background.png");
 	}
 }
