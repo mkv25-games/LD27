@@ -24,7 +24,7 @@ class FemaleLandOwner extends CharacterVO
 		createOptions();
 	}
 	
-	override private function createOptions():Dynamic 
+	override private function createOptions() 
 	{
 		speech1 = "Out of my way plebian,\n I have a schedule to meet.";
 		speech2 = "No time for idiots,\n remove yourself from my view.";

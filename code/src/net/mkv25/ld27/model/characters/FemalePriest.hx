@@ -24,7 +24,7 @@ class FemalePriest extends CharacterVO
 		createOptions();
 	}	
 	
-	override private function createOptions():Dynamic 
+	override private function createOptions() 
 	{
 		speech1 = "The way is clear,\n hope is thy name.";
 		speech2 = "Only one way, our way.\n Join us.";

@@ -24,7 +24,7 @@ class FemaleMidwife extends CharacterVO
 		createOptions();
 	}
 	
-	override private function createOptions():Dynamic 
+	override private function createOptions() 
 	{
 		speech1 = "Your families, your young,\n let me show them the way.";
 		speech2 = "A wholesome lifestyle promotes\n health and sanity!";

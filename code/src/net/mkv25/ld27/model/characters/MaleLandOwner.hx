@@ -24,7 +24,7 @@ class MaleLandOwner extends CharacterVO
 		createOptions();
 	}
 	
-	override private function createOptions():Dynamic 
+	override private function createOptions() 
 	{
 		speech1 = "These lands are stale,\n I demand to meet with the owner.";
 		speech2 = "What a trot of a place,\n completely ghastly I say.";

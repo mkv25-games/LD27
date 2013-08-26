@@ -24,7 +24,7 @@ class FemaleMerchant extends CharacterVO
 		createOptions();
 	}
 	
-	override private function createOptions():Dynamic 
+	override private function createOptions() 
 	{
 		speech1 = "I have rare spices,\n and finest silks, come this way.";
 		speech2 = "My, a beautiful face, say,\n have you seen my wares?";

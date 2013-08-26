@@ -24,7 +24,7 @@ class MaleMerchant extends CharacterVO
 		createOptions();
 	}	
 	
-	override private function createOptions():Dynamic 
+	override private function createOptions() 
 	{
 		speech1 = "I have armour, weapons,\n and banners for buy and sale.";
 		speech2 = "Jest your followers, blaze\n to glory with my wares!";

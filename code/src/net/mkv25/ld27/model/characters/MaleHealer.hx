@@ -24,7 +24,7 @@ class MaleHealer extends CharacterVO
 		createOptions();
 	}	
 	
-	override private function createOptions():Dynamic 
+	override private function createOptions() 
 	{
 		speech1 = "Death, decay, rot. Let me\n assail these things for you.";
 		speech2 = "There's a bad smell around here!\n Do you require my services?";

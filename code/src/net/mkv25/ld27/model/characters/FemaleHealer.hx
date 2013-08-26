@@ -24,7 +24,7 @@ class FemaleHealer extends CharacterVO
 		createOptions();
 	}
 	
-	override private function createOptions():Dynamic 
+	override private function createOptions() 
 	{
 		speech1 = "I bring science,\n let me build your knowledge!";
 		speech2 = "My knowledge can bring coin,\n let me show you.";

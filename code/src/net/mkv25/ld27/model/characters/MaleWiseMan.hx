@@ -24,7 +24,7 @@ class MaleWiseMan extends CharacterVO
 		createOptions();
 	}
 	
-	override private function createOptions():Dynamic 
+	override private function createOptions() 
 	{
 		speech1 = "Your youth, your workers,\n I can teach them a thing or two.";
 		speech2 = "Knowledge is power, power is\n money, money is priceless!";

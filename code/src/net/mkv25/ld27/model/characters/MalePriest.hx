@@ -26,7 +26,7 @@ class MalePriest extends CharacterVO
 		createOptions();
 	}
 	
-	override private function createOptions():Dynamic 
+	override private function createOptions() 
 	{
 		speech1 = "Holiness begets the Holy.\n Heed its word.";
 		speech2 = "Renounce your land, your gold,\n listen to the way!";
