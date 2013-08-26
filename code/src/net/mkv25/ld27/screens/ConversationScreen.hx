@@ -95,9 +95,9 @@ class ConversationScreen extends Screen
 		setupTextField(playerLandText, 440, 3, formatThousands(player.land));
 		setupTextField(playerFollowersText, 605, 3, formatThousands(player.followers));
 		
-		setupTextField(aiLandText, 613, 390, formatThousands(player.startingLand), 60);
-		setupTextField(aiFollowersText, 676, 390, formatThousands(player.startingFollowers), 60);
-		setupTextField(aiGoldText, 734, 390, formatThousands(player.startingGold), 60);
+		setupTextField(aiLandText, 613, 390, formatThousands(ai.startingLand), 60);
+		setupTextField(aiFollowersText, 676, 390, formatThousands(ai.startingFollowers), 60);
+		setupTextField(aiGoldText, 734, 390, formatThousands(ai.startingGold), 60);
 		
 		setupTextField(playerSpeechText, 208, 85, player.speech2, 390, 80);
 		setupTextField(aiSpeechText, 597, 171, ai.speech1, 390, 80);
