@@ -3,6 +3,7 @@ import motion.Actuate;
 import motion.easing.Linear;
 import net.mkv25.ld27.core.Text;
 import net.mkv25.ld27.model.CharacterVO;
+import net.mkv25.ld27.model.OptionVO;
 import net.mkv25.ld27.ui.ButtonUI;
 import net.mkv25.ld27.ui.CharacterUI;
 import nme.text.TextField;
@@ -10,6 +11,7 @@ import nme.text.TextFormatAlign;
 
 class ConversationScreen extends Screen
 {
+	var firstShow:Bool;
 
 	var playerGoldText:TextField;
 	var playerLandText:TextField;
@@ -62,7 +64,7 @@ class ConversationScreen extends Screen
 		for (i in 0...4)
 		{
 			var button = new ButtonUI();
-			button.setup("Option " + (i + 1), onOptionButtonSelected);
+			button.setup("Option " + (i + 1), null);
 			optionButtons.push(button);
 		}
 	}
@@ -74,12 +76,17 @@ class ConversationScreen extends Screen
 		artwork.addChild(playerCharacterUI.artwork);
 		artwork.addChild(aiCharacterUI.artwork);
 		
+		eventbus.requestBeginGame.add(onGameReset);
 		eventbus.readyForNextTurn.add(onReadyForNextTurn);
 	}
 	
 	override public function show():Void 
 	{
-		// super.show();
+		if (firstShow)
+		{
+			super.show();
+			firstShow = false;
+		}
 		
 		var player:CharacterVO = characterController.selectedCharacter;
 		var ai:CharacterVO = characterController.getAiCharacter();
@@ -88,12 +95,12 @@ class ConversationScreen extends Screen
 		setupTextField(playerLandText, 440, 3, formatThousands(player.land));
 		setupTextField(playerFollowersText, 605, 3, formatThousands(player.followers));
 		
-		setupTextField(aiGoldText, 613, 390, formatThousands(player.startingGold), 60);
-		setupTextField(aiLandText, 676, 390, formatThousands(player.startingLand), 60);
-		setupTextField(aiFollowersText, 734, 390, formatThousands(player.startingFollowers), 60);
+		setupTextField(aiLandText, 613, 390, formatThousands(player.startingLand), 60);
+		setupTextField(aiFollowersText, 676, 390, formatThousands(player.startingFollowers), 60);
+		setupTextField(aiGoldText, 734, 390, formatThousands(player.startingGold), 60);
 		
-		setupTextField(playerSpeechText, 208, 85, "Hail, friend or foe?\nA challenger no less.", 390, 80);
-		setupTextField(aiSpeechText, 597, 171, "What havest we here lo, a fiend?\nA beast? Perhaps a dolt.", 390, 80);
+		setupTextField(playerSpeechText, 208, 85, player.speech2, 390, 80);
+		setupTextField(aiSpeechText, 597, 171, ai.speech1, 390, 80);
 		
 		setupTextField(timeRemainingText, 121, 380, "!!!", 100, 80);
 		
@@ -114,13 +121,19 @@ class ConversationScreen extends Screen
 		var c:Int = 0;
 		for (button in optionButtons)
 		{
+			button.artwork.mouseEnabled = false;
+			button.artwork.mouseChildren = false;
+			
 			button.artwork.x = 400;
 			button.artwork.y = 550; // offscreen
-			button.artwork.alpha = 1.0;
+			button.artwork.alpha = 0.7;
 			artwork.addChild(button.artwork);
 			
 			var targetY:Int = 460 - (55 * c);
-			Actuate.tween(button.artwork, 0.5, { y: targetY, alpha: 1.0 } ).delay(0.5 - 0.1 * c);
+			Actuate.tween(button.artwork, 0.5, { y: targetY, alpha: 0.7 } ).delay(0.5 - 0.1 * c);
+			
+			var option:OptionVO = ai.options[c];
+			button.setup(option.text, onOptionButtonSelected);
 			
 			c++;
 		}
@@ -133,8 +146,14 @@ class ConversationScreen extends Screen
 	{
 		ignoreTimer = false;
 		ignoreOption = false;
-		timeRemaining = 10.0;
-		Actuate.tween(this, 10.0, { timeRemaining: 0 } ).ease(Linear.easeNone).onUpdate(onTimerUpdate).onComplete(onTimerComplete);
+		Actuate.tween(this, timeRemaining, { timeRemaining: 0 } ).ease(Linear.easeNone).onUpdate(onTimerUpdate).onComplete(onTimerComplete);
+		
+		for (button in optionButtons)
+		{
+			button.artwork.alpha = 1.0;
+			button.artwork.mouseEnabled = true;
+			button.artwork.mouseChildren = true;
+		}
 	}
 	
 	function stopTimer()
@@ -159,6 +178,13 @@ class ConversationScreen extends Screen
 		if (ignoreTimer)
 			return;
 			
+		ignoreOption = true;
+		for (item in optionButtons)
+		{
+			// hide all options
+			Actuate.tween(item.artwork, 0.2, { alpha: 0.0 } );
+		}
+			
 		Actuate.tween(timeRemainingText, 0.05, { alpha: 0.0 } ).repeat(7).reflect(true).delay(0.15).onComplete(onTimerEndComplete);
 	}
 	
@@ -172,22 +198,27 @@ class ConversationScreen extends Screen
 	{
 		if (ignoreOption)
 			return;
-		
+			
+		if (ignoreTimer)
+			return;
+			
 		ignoreOption = true;
 		stopTimer();
 		
 		var optionIndex = Lambda.indexOf(optionButtons, button);
-		trace("Option " + optionIndex + " selected");
 		
 		// flash the timer text
 		Actuate.tween(timeRemainingText, 0.05, { alpha: 0.0 } ).repeat(7).reflect(true).delay(0.15).onComplete(onOptionSelectedEndComplete, [optionIndex]);
 		
 		for (item in optionButtons)
 		{
+			item.artwork.mouseEnabled = false;
+			item.artwork.mouseChildren = false;
+			
 			if (item == button)
 			{
 				// flash the option
-				Actuate.tween(item.artwork, 0.05, { alpha: 0.0 } ).repeat(7).reflect(true).delay(0.15);
+				Actuate.tween(item.artwork, 0.02, { alpha: 0.3 } ).repeat(5).reflect(true).delay(0.05);
 			}
 			else
 			{
@@ -199,10 +230,28 @@ class ConversationScreen extends Screen
 	
 	function onOptionSelectedEndComplete(optionIndex:Int)
 	{
-		// TODO: Do something with optionIndex
-		trace("Doing something with " + optionIndex + ".");
+		// Get the ai option and process it
+		var ai = characterController.getAiCharacter();
+		var option:OptionVO = ai.options[optionIndex];
+		characterController.processOption(option);
 		
-		eventbus.requestNextTurn.dispatch(this);
+		// Move on to the next turn
+		if (characterController.turn >= 18)
+		{
+			// End the game now
+			eventbus.requestNextScreen.dispatch(this);
+		}
+		else
+		{
+			// Next turn!
+			eventbus.requestNextTurn.dispatch(this);
+		}
+	}
+	
+	function onGameReset(e)
+	{
+		firstShow = true;
+		timeRemaining = 10.0;
 	}
 	
 	function onReadyForNextTurn(e)

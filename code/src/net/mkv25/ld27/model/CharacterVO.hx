@@ -19,6 +19,10 @@ class CharacterVO
 	public var followers:Int;
 	public var land:Int;
 	
+	public var speech1:String;
+	public var speech2:String;
+	public var options:Array<OptionVO>;
+	
 	public function new() 
 	{
 		gender = null;
@@ -33,6 +37,8 @@ class CharacterVO
 		gold = 0;
 		followers = 0;
 		land = 0;
+		
+		createOptions();
 	}
 	
 	public function reset():Void
@@ -43,6 +49,11 @@ class CharacterVO
 		gold = startingGold;
 		followers = startingFollowers;
 		land = startingLand;
+	}
+	
+	function createOptions()
+	{
+		throw "Abstract method, need to override in sub-class.";
 	}
 	
 }

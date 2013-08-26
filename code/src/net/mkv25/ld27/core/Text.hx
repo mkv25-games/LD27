@@ -22,6 +22,7 @@ class Text
 		text.embedFonts = true;
 		text.mouseEnabled = false;
 		text.selectable = false;
+		text.wordWrap = true;
 		
 		return tf;
 	}
