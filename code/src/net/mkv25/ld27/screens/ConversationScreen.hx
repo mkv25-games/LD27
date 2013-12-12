@@ -251,7 +251,7 @@ class ConversationScreen extends Screen
 	function onGameReset(e)
 	{
 		firstShow = true;
-		timeRemaining = 10.0;
+		timeRemaining = 100.0;
 	}
 	
 	function onReadyForNextTurn(e)
