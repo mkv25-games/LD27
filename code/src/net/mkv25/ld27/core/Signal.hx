@@ -1,6 +1,6 @@
 package net.mkv25.ld27.core;
 
-import nme.Vector;
+import openfl.Vector;
 	
 class Signal
 {

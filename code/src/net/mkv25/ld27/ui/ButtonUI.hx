@@ -1,12 +1,12 @@
 package net.mkv25.ld27.ui;
 
 import net.mkv25.ld27.core.Text;
-import nme.Assets;
-import nme.display.Bitmap;
-import nme.display.Sprite;
-import nme.events.MouseEvent;
-import nme.text.TextField;
-import nme.text.TextFormatAlign;
+import openfl.Assets;
+import openfl.display.Bitmap;
+import openfl.display.Sprite;
+import openfl.events.MouseEvent;
+import openfl.text.TextField;
+import openfl.text.TextFormatAlign;
 
 class ButtonUI 
 {

@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	<!-- NMML reference: https://gist.github.com/1763850 -->
-	
+
 	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
 	<meta title="LD27 10 Seconds" package="net.mkv25.ld27.LD2710Seconds" version="1.0.0" company="John Beech" />
-	
+
 	<!-- output -->
 	<app main="net.mkv25.ld27.Main" file="LD2710Seconds" path="bin" />
-	
+
 	<window background="#666666" fps="60" />
 	<window width="800" height="500" unless="mobile" />
 	<window orientation="landscape" vsync="true" antialiasing="0" if="cpp" />
-	
+
 	<!-- classpath, haxe libs -->
 	<source path="src" />
-	<haxelib name="nme" />
+	<haxelib name="openfl" />
 	<haxelib name="actuate" />
-	
+
 	<!-- assets -->
-	<icon path="assets/nme.svg" />
+	<icon path="assets/openfl.svg" />
 	<assets path="assets/img" rename="img" />
 	<assets path="assets/fonts" rename="fonts" />
-	
+
 	<!-- DLLs -->
 	<ndll name="std" />
 	<ndll name="regexp" />
 	<ndll name="zlib" />
-	<ndll name="nme" haxelib="nme" />
 
 	<!-- optimize JS output -->
 	<haxeflag name="--dead-code-elimination" if="html5" />
 	<haxeflag name="--js-modern" if="html5" />
-	
+
 </project>

@@ -3,7 +3,7 @@ import net.mkv25.ld27.controller.CharacterController;
 import net.mkv25.ld27.controller.EventBus;
 import net.mkv25.ld27.model.CharacterVO;
 import net.mkv25.ld27.ui.CharacterPickerUI;
-import nme.display.Sprite;
+import openfl.display.Sprite;
 
 class PickerScreen extends Screen
 {	

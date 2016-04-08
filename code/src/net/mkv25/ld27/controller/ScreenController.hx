@@ -5,8 +5,8 @@ import net.mkv25.ld27.screens.EventLogScreen;
 import net.mkv25.ld27.screens.IntroScreen;
 import net.mkv25.ld27.screens.PickerScreen;
 import net.mkv25.ld27.screens.Screen;
-import nme.display.Sprite;
-import nme.display.Stage;
+import openfl.display.Sprite;
+import openfl.display.Stage;
 
 class ScreenController 
 {

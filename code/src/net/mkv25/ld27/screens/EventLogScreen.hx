@@ -3,8 +3,8 @@ package net.mkv25.ld27.screens;
 import net.mkv25.ld27.core.Text;
 import net.mkv25.ld27.ui.ButtonUI;
 import net.mkv25.ld27.ui.CharacterUI;
-import nme.text.TextFormatAlign;
-import nme.text.TextField;
+import openfl.text.TextFormatAlign;
+import openfl.text.TextField;
 
 class EventLogScreen extends Screen
 {

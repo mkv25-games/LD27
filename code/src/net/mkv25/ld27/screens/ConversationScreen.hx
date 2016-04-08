@@ -6,8 +6,8 @@ import net.mkv25.ld27.model.CharacterVO;
 import net.mkv25.ld27.model.OptionVO;
 import net.mkv25.ld27.ui.ButtonUI;
 import net.mkv25.ld27.ui.CharacterUI;
-import nme.text.TextField;
-import nme.text.TextFormatAlign;
+import openfl.text.TextField;
+import openfl.text.TextFormatAlign;
 
 class ConversationScreen extends Screen
 {

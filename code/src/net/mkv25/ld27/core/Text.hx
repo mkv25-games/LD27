@@ -1,7 +1,7 @@
 package net.mkv25.ld27.core;
 
-import nme.Assets;
-import nme.text.TextField;
+import openfl.Assets;
+import openfl.text.TextField;
 
 class Text 
 {

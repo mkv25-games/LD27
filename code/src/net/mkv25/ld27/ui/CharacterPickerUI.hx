@@ -6,10 +6,10 @@ import net.mkv25.ld27.core.Signal;
 import net.mkv25.ld27.core.Text;
 import net.mkv25.ld27.enums.GenderEnum;
 import net.mkv25.ld27.model.CharacterVO;
-import nme.display.Sprite;
-import nme.events.MouseEvent;
-import nme.text.TextField;
-import nme.text.TextFormatAlign;
+import openfl.display.Sprite;
+import openfl.events.MouseEvent;
+import openfl.text.TextField;
+import openfl.text.TextFormatAlign;
 
 class CharacterPickerUI 
 {

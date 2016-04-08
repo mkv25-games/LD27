@@ -3,10 +3,10 @@ package net.mkv25.ld27.screens;
 import motion.Actuate;
 import net.mkv25.ld27.controller.CharacterController;
 import net.mkv25.ld27.controller.EventBus;
-import nme.Assets;
-import nme.display.Bitmap;
-import nme.display.BitmapData;
-import nme.display.Sprite;
+import openfl.Assets;
+import openfl.display.Bitmap;
+import openfl.display.BitmapData;
+import openfl.display.Sprite;
 
 class Screen
 {

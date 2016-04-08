@@ -4,9 +4,9 @@ import net.mkv25.ld27.enums.BodyTypeEnum;
 import net.mkv25.ld27.enums.EquipmentEnum;
 import net.mkv25.ld27.enums.GenderEnum;
 import net.mkv25.ld27.model.CharacterVO;
-import nme.Assets;
-import nme.display.Bitmap;
-import nme.display.Sprite;
+import openfl.Assets;
+import openfl.display.Bitmap;
+import openfl.display.Sprite;
 
 class CharacterUI 
 {

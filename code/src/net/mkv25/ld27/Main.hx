@@ -3,18 +3,18 @@ package net.mkv25.ld27;
 import net.mkv25.ld27.controller.CharacterController;
 import net.mkv25.ld27.controller.EventBus;
 import net.mkv25.ld27.controller.ScreenController;
-import nme.display.Sprite;
-import nme.display.Stage;
-import nme.events.Event;
-import nme.Lib;
+import openfl.display.Sprite;
+import openfl.display.Stage;
+import openfl.events.Event;
+import openfl.Lib;
 
-class Main extends Sprite 
+class Main extends Sprite
 {
 	public var eventbus:EventBus;
 	public var screenController:ScreenController;
 	public var characterController:CharacterController;
-	
-	public function new() 
+
+	public function new()
 	{
 		super();
 		#if iphone
@@ -24,25 +24,25 @@ class Main extends Sprite
 		#end
 	}
 
-	private function init(e) 
+	private function init(e)
 	{
 		// initialise objects
 		eventbus = new EventBus();
 		screenController = new ScreenController();
 		characterController = new CharacterController();
-		
+
 		// dependency injection
 		characterController.setup(eventbus);
 		screenController.setup(stage, eventbus, characterController);
 	}
-	
-	static public function main() 
+
+	static public function main()
 	{
 		var stage = Lib.current.stage;
-		stage.scaleMode = nme.display.StageScaleMode.NO_SCALE;
-		stage.align = nme.display.StageAlign.TOP_LEFT;
-		
+		stage.scaleMode = openfl.display.StageScaleMode.NO_SCALE;
+		stage.align = openfl.display.StageAlign.TOP_LEFT;
+
 		Lib.current.addChild(new Main());
 	}
-	
+
 }
